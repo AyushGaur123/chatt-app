@@ -22,7 +22,9 @@ function Login() {
     try {
       setLoading(true);
       await login(data);
-      toast.success("Login successful 🎉");
+      // console.log(data)
+
+      // toast.success("Login successful 🎉");
     } catch (error) {
       toast.error("Invalid email or password");
       console.log(error)

@@ -4,7 +4,8 @@ import { axiosInstance } from "../lib/axios.js";
 import { toast } from "react-hot-toast";
 import { io } from "socket.io-client";
 
-const URL = "https://chattapp-backend-stgw.onrender.com";
+// const URL = "https://chattapp-backend-stgw.onrender.com";
+const URL = "http://localhost:3000";
 
 export const useAuth = create((set, get) => ({
   authUser: null,
@@ -54,11 +55,13 @@ export const useAuth = create((set, get) => ({
       const res = await axiosInstance.post("/auth/login", data, {
         withCredentials: true,
       });
+      // console.log(data)
+      toast.success("login successfull")
       set({ authUser: res.data });
       get().connectSocket();
     } catch (error) {
       console.error("Error in login:", error.message);
-      alert(error.response?.data?.message || "Login failed");
+      toast.error(error.response?.data?.message || "Login failed");
     } finally {
       set({ isLoggingIn: false });
     }
