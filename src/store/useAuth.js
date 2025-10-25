@@ -38,6 +38,7 @@ export const useAuth = create((set, get) => ({
       const res = await axiosInstance.post("/auth/signup", data, {
         withCredentials: true,
       });
+       localStorage.setItem("authdata",res.data);
       set({ authUser: res.data });
       toast.success("Signup successful");
       get().connectSocket();

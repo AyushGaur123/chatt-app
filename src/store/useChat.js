@@ -17,7 +17,8 @@ export const userChat = create((set,get)=>({
             const res = await axiosInstance.get("/messages/users");
             set({users:res.data})
         } catch (error) {
-            toast.error(error.response.data.message)
+            alert("no user")
+            // toast.error(error.response.data.message)
         }finally{
             set({isUserLoading:false})
         }
