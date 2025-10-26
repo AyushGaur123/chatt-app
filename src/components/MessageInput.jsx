@@ -1,18 +1,15 @@
-import React, { useRef,useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { userChat } from '../store/useChat'
-import {Send,Image,X} from "lucide-react"
+import { Send, Image, X } from "lucide-react"
 import { useAuth } from '../store/useAuth'
 
 const MessageInput = () => {
-    const [text, setText] = useState("")
-    const [imagePreview, setImagePreview] = useState(null)
-    const fileInputRef = useRef(null)
-    const {sendMessage}=userChat()
+  const [text, setText] = useState("")
+  const [imagePreview, setImagePreview] = useState(null)
+  const fileInputRef = useRef(null)
+  const { sendMessage } = userChat()
 
-    // const handleImageChange=(e)=>{}
-    // const removeImage=()=>{}
-
-      const handleImageChange = (e) => {
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (!file.type.startsWith("image/")) {
       toast.error("Please select an image file");
@@ -31,23 +28,23 @@ const MessageInput = () => {
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  
-    const handleSendMessage = async(e)=>{
-      e.preventDefault();
-      if(!text.trim()&&!imagePreview) return
-      try {
-        await sendMessage({
-          text:text.trim(),
-          image:imagePreview,
-        })
-        setText("")
-        setImagePreview(null)
-        if(fileInputRef.current) fileInputRef.current.value="";
-        
-      } catch (error) {
-        console.log("failed to send message")
-      }
+
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
+    if (!text.trim() && !imagePreview) return
+    try {
+      await sendMessage({
+        text: text.trim(),
+        image: imagePreview,
+      })
+      setText("")
+      setImagePreview(null)
+      if (fileInputRef.current) fileInputRef.current.value = "";
+
+    } catch (error) {
+      console.log("failed to send message")
     }
+  }
   return (
 
     <div className="p-4 w-full">
@@ -73,7 +70,7 @@ const MessageInput = () => {
 
       <form onSubmit={handleSendMessage} className="flex items-center gap-2">
 
-       <div className="flex-1 flex gap-2">
+        <div className="flex-1 flex gap-2">
           <input
             type="text"
             className="w-full input input-bordered rounded-lg input-sm sm:input-md"

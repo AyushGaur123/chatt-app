@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../store/useAuth.js";
@@ -25,7 +24,6 @@ const Signup = () => {
     } catch (error) {
       console.log("Signup Error:", error);
 
-      // Backend usually sends a message like: "Email already exists"
       if (error.response?.data?.message) {
         setError("email", {
           type: "server",
@@ -49,7 +47,6 @@ const Signup = () => {
           </h2>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            {/* Full Name */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text font-medium">Full Name</span>
@@ -76,7 +73,6 @@ const Signup = () => {
               )}
             </div>
 
-            {/* Email */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text font-medium">Email</span>
@@ -96,10 +92,6 @@ const Signup = () => {
                 </p>
               )}
             </div>
-
-          {/* Password */}
-          
-
             <div>
               <label className="label">
                 <span className="label-text">Password</span>
@@ -120,7 +112,6 @@ const Signup = () => {
               )}
             </div>
 
-            {/* Submit Button */}
             <div className="form-control mt-6">
               <button
                 type="submit"

@@ -17,8 +17,7 @@ export const userChat = create((set,get)=>({
             const res = await axiosInstance.get("/messages/users");
             set({users:res.data})
         } catch (error) {
-            alert("no user")
-            // toast.error(error.response.data.message)
+            toast.error(error.response.data.message||"Can't fetch users")
         }finally{
             set({isUserLoading:false})
         }
@@ -50,6 +49,7 @@ export const userChat = create((set,get)=>({
             
         }
     },
+
     subscribeToMessages:()=>{
         const {selectedUser}=get()
         if(!selectedUser) return
@@ -65,8 +65,6 @@ export const userChat = create((set,get)=>({
         const socket=useAuth.getState().socket;
         socket.off("newMessage")
     },
-
-
 
     setSelectedUser:(selectedUser)=>set({selectedUser})
 

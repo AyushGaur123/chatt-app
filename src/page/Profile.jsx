@@ -1,5 +1,3 @@
-
-
 import { useState } from "react";
 import { useAuth } from "../store/useAuth";
 import { Camera, Mail, User } from "lucide-react";
@@ -24,20 +22,17 @@ const ProfilePage = () => {
 
   return (
     <div className="min-h-screen flex justify-center items-center pt-16 bg-base-200">
-      {/* Container */}
       <div className="bg-base-300 rounded-xl shadow-lg p-8 w-full max-w-md flex flex-col items-center space-y-6 overflow-hidden">
-        {/* === Header === */}
         <div className="text-center">
           <h1 className="text-2xl font-semibold">Profile</h1>
           <p className="text-sm mt-1 text-zinc-400">Your profile information</p>
         </div>
 
-        {/* === Avatar Section === */}
         <div className="flex flex-col items-center gap-3">
           <div className="relative">
             <img
               src={selectedImg || authUser?.profilePic || "/avtar.png"}
-              // alt="Profile"
+              alt="Profile"
               className="size-28 rounded-full object-cover border-4 border-base-100 shadow-md"
             />
             <label
@@ -62,7 +57,6 @@ const ProfilePage = () => {
           </p>
         </div>
 
-        {/* === User Info === */}
         <div className="w-full space-y-4">
           <div>
             <div className="text-xs text-zinc-400 flex items-center gap-2 mb-1">
@@ -83,7 +77,6 @@ const ProfilePage = () => {
           </div>
         </div>
 
-        {/* === Account Info === */}
         <div className="w-full bg-base-200 rounded-xl p-4 text-sm space-y-2">
           <div className="flex items-center justify-between border-b border-base-300 pb-2">
             <span>Member Since</span>

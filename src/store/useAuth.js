@@ -20,7 +20,7 @@ export const useAuth = create((set, get) => ({
     try {
       set({ isCheckingAuth: true });
       const res = await axiosInstance.get("/auth/check", {
-        withCredentials: true, // send cookies
+        withCredentials: true, 
       });
       set({ authUser: res.data });
       get().connectSocket();
@@ -56,7 +56,6 @@ export const useAuth = create((set, get) => ({
       const res = await axiosInstance.post("/auth/login", data, {
         withCredentials: true,
       });
-      // console.log(data)
       toast.success("login successfull")
       set({ authUser: res.data });
       get().connectSocket();

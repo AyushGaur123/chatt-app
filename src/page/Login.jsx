@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../store/useAuth.js";
 import { toast } from "react-hot-toast";
-import { Mail, Lock } from "lucide-react"; // 👈 Lucide Icons
+import { Mail, Lock } from "lucide-react"; 
 
 function Login() {
   const {
@@ -22,12 +22,8 @@ function Login() {
     try {
       setLoading(true);
       await login(data);
-      // console.log(data)
-
-      // toast.success("Login successful 🎉");
     } catch (error) {
       toast.error("Invalid email or password");
-      console.log(error)
     } finally {
       setLoading(false);
     }
