@@ -76,19 +76,7 @@ const avatarUrl = `https://api.dicebear.com/9.x/adventurer/png?seed=${randomSeed
               <Settings className="w-5 h-5" /> Settings
             </NavLink>
 
-            <button className="btn btn-ghost btn-circle hover:bg-base-200">
-              <div className="indicator">
-                <Bell className="w-5 h-5" />
-                <span className="badge badge-sm badge-error indicator-item"></span>
-              </div>
-            </button>
-
-            <button
-              onClick={toggleTheme}
-              className="btn btn-ghost btn-circle hover:bg-base-200"
-            >
-              {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </button>
+           
 
             {authUser && (
               <div className="dropdown dropdown-end">
