@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import {Menu, X, Home, User, Settings, LogOut, Bell, Moon, Sun,} from "lucide-react";
+import {Menu, X, Home, User, Settings, LogOut} from "lucide-react";
 import { useAuth } from "../store/useAuth";
 
 const Navbar = () => {
