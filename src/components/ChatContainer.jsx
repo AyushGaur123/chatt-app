@@ -50,10 +50,10 @@ const ChatContainer = () => {
           </button>
           <button
             className="bg-red-500 text-white px-3 py-1 rounded"
-            onClick={() => {
-              userChat.setState({ messages: [] });
+            onClick={async () => {
+              await userChat.getState().clearChat();
               toast.dismiss(t.id);
-              toast.success("Chat cleared!");
+
             }}
           >
             Clear
