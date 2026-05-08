@@ -77,15 +77,24 @@ const Signup = () => {
               <label className="label">
                 <span className="label-text font-medium">Email</span>
               </label>
+
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 z-10" />
+
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  {...register("email", { required: "Email is required" })}
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
+                      message: "Enter a valid Gmail address",
+                    },
+                  })}
                   className="input input-bordered w-full pl-10"
                 />
               </div>
+
               {errors.email && (
                 <p className="text-error text-sm mt-1">
                   {errors.email.message}
