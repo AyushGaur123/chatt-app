@@ -70,6 +70,19 @@ export const userChat = create((set, get) => ({
 
         }
     },
+    deleteMessage: async (messageId) => {
+        try {
+            await axiosInstance.delete(`/messages/message/${messageId}`);
+
+            set((state) => ({
+                messages: state.messages.filter(
+                    (msg) => msg._id !== messageId
+                ),
+            }));
+        } catch (error) {
+            toast.error("Failed to delete message");
+        }
+    },
 
     subscribeToMessages: () => {
         const { selectedUser } = get()

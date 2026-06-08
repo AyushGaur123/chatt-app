@@ -6,3 +6,11 @@ export function formatMessageTime(data){
     })
     
 }
+
+export function formatMessageDate(date) {
+  return new Date(date).toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
