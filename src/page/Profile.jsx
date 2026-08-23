@@ -1,6 +1,7 @@
+
 import { useState } from "react";
 import { useAuth } from "../store/useAuth";
-import { Camera, Mail, User } from "lucide-react";
+import { Camera, Mail, User, CalendarDays } from "lucide-react";
 
 const ProfilePage = () => {
   const { authUser, isUpdatingProfile, updateProfile } = useAuth();
@@ -21,27 +22,28 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center pt-16 bg-base-200">
-      <div className="bg-base-300 rounded-xl shadow-lg p-8 w-full max-w-md flex flex-col items-center space-y-6 overflow-hidden">
-        <div className="text-center">
-          <h1 className="text-2xl font-semibold">Profile</h1>
-          <p className="text-sm mt-1 text-zinc-400">Your profile information</p>
-        </div>
-
-        <div className="flex flex-col items-center gap-3">
-          <div className="relative">
-            <img
-              src={selectedImg || authUser?.profilePic || "/avtar.png"}
-              alt="Profile"
-              className="size-28 rounded-full object-cover border-4 border-base-100 shadow-md"
-            />
+    <div className="min-h-screen flex justify-center items-center pt-16 bg-base-200 px-4">
+      <div className="card bg-base-100 shadow-xl w-full max-w-md">
+        <div className="card-body items-center text-center gap-6">
+          {/* Avatar */}
+          <div className="avatar relative">
+            <div
+              className={`w-28 rounded-full ring ring-base-300 ring-offset-base-100 ring-offset-2 ${
+                isUpdatingProfile ? "opacity-60" : ""
+              }`}
+            >
+              <img
+                src={selectedImg || authUser?.profilePic || "/avtar.png"}
+                alt="Profile"
+              />
+            </div>
             <label
               htmlFor="avatar-upload"
-              className={`absolute bottom-0 right-0 bg-base-content hover:scale-105 p-2 rounded-full cursor-pointer transition-all duration-200 ${
+              className={`absolute bottom-0 right-0 btn btn-circle btn-sm btn-primary ${
                 isUpdatingProfile ? "animate-pulse pointer-events-none" : ""
               }`}
             >
-              <Camera className="w-5 h-5 text-base-200" />
+              <Camera className="w-4 h-4" />
               <input
                 type="file"
                 id="avatar-upload"
@@ -52,39 +54,52 @@ const ProfilePage = () => {
               />
             </label>
           </div>
-          <p className="text-xs text-zinc-400">
-            {isUpdatingProfile ? "Uploading..." : "Click camera icon to update"}
-          </p>
-        </div>
 
-        <div className="w-full space-y-4">
           <div>
-            <div className="text-xs text-zinc-400 flex items-center gap-2 mb-1">
-              <User className="w-4 h-4" /> Full Name
-            </div>
-            <p className="px-4 py-2 bg-base-100 rounded-lg border border-base-300">
-              {authUser?.fullName}
+            <h1 className="text-xl font-semibold">{authUser?.fullName}</h1>
+            <p className="text-sm text-base-content/60 mt-1">
+              {isUpdatingProfile ? "Uploading..." : authUser?.email}
             </p>
           </div>
 
-          <div>
-            <div className="text-xs text-zinc-400 flex items-center gap-2 mb-1">
-              <Mail className="w-4 h-4" /> Email
-            </div>
-            <p className="px-4 py-2 bg-base-100 rounded-lg border border-base-300">
-              {authUser?.email}
-            </p>
-          </div>
-        </div>
+          <div className="divider my-0 w-full" />
 
-        <div className="w-full bg-base-200 rounded-xl p-4 text-sm space-y-2">
-          <div className="flex items-center justify-between border-b border-base-300 pb-2">
-            <span>Member Since</span>
-            <span className="z-10 ">{authUser?.createdAt?.split("T")[0]}</span>
+          {/* Info rows */}
+          <div className="w-full space-y-4 text-left">
+            <div className="flex items-center gap-3">
+              <User className="w-4 h-4 text-base-content/50 shrink-0" />
+              <div>
+                <p className="text-xs text-base-content/50">Full Name</p>
+                <p className="font-medium">{authUser?.fullName}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <Mail className="w-4 h-4 text-base-content/50 shrink-0" />
+              <div>
+                <p className="text-xs text-base-content/50">Email</p>
+                <p className="font-medium">{authUser?.email}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <CalendarDays className="w-4 h-4 text-base-content/50 shrink-0" />
+              <div>
+                <p className="text-xs text-base-content/50">Member Since</p>
+                <p className="font-medium">
+                  {authUser?.createdAt?.split("T")[0]}
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="flex items-center justify-between">
-            <span>Account Status</span>
-            <span className="text-green-500 font-medium">Active</span>
+
+          <div className="divider my-0 w-full" />
+
+          <div className="flex items-center justify-between w-full">
+            <span className="text-sm text-base-content/60">
+              Account Status
+            </span>
+            <span className="badge badge-success badge-outline">Active</span>
           </div>
         </div>
       </div>
