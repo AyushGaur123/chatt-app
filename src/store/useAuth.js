@@ -4,8 +4,8 @@ import { axiosInstance } from "../lib/axios.js";
 import { toast } from "react-hot-toast";
 import { io } from "socket.io-client";
 
-// const URL = "https://chattapp-backend-stgw.onrender.com";
-const URL = "http://localhost:3000";
+const URL = "https://chattapp-backend-stgw.onrender.com";
+// const URL = "http://localhost:3000";
 
 export const useAuth = create((set, get) => ({
   authUser: null,
