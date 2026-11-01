@@ -1,7 +1,9 @@
+
 import React, { useRef, useState } from 'react'
 import { userChat } from '../store/useChat'
 import { Send, Image, X } from "lucide-react"
 import { useAuth } from '../store/useAuth'
+import { toast } from 'react-hot-toast'
 
 const MessageInput = () => {
   const [text, setText] = useState("")
@@ -11,6 +13,7 @@ const MessageInput = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    if (!file) return;
     if (!file.type.startsWith("image/")) {
       toast.error("Please select an image file");
       return;
@@ -47,7 +50,7 @@ const MessageInput = () => {
   }
   return (
 
-    <div className="p-4 w-full">
+    <div className="p-2 md:p-4 w-full">
       {imagePreview && (
         <div className="mb-3 flex items-center gap-2">
           <div className="relative">
@@ -73,7 +76,7 @@ const MessageInput = () => {
         <div className="flex-1 flex gap-2">
           <input
             type="text"
-            className="w-full input input-bordered rounded-lg input-sm sm:input-md"
+            className="w-full input input-bordered rounded-lg text-base md:text-sm"
             placeholder="Type a message..."
             value={text}
             onChange={(e) => setText(e.target.value)}
@@ -88,7 +91,7 @@ const MessageInput = () => {
 
           <button
             type="button"
-            className={`hidden sm:flex btn btn-circle
+            className={`btn btn-circle size-10 min-h-0 shrink-0
                      ${imagePreview ? "text-emerald-500" : "text-zinc-400"}`}
             onClick={() => fileInputRef.current?.click()}
           >
@@ -97,7 +100,7 @@ const MessageInput = () => {
         </div>
         <button
           type="submit"
-          className="btn btn-sm btn-circle"
+          className="btn btn-circle size-10 min-h-0 shrink-0"
           disabled={!text.trim() && !imagePreview}
         >
           <Send size={22} />

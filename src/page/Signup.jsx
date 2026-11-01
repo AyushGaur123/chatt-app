@@ -38,7 +38,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-base-200 transition-colors duration-300">
+    <div className="min-h-dvh flex items-center justify-center bg-base-200 px-4 pt-16 pb-4 transition-colors duration-300">
       <div className="card w-full max-w-md bg-base-100 shadow-2xl border border-base-300">
         <div className="card-body">
           <h2 className="text-3xl font-bold text-center text-primary mb-6 flex items-center justify-center gap-2">

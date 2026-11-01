@@ -1,13 +1,18 @@
 import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import {Menu, X, Home, User, Settings, LogOut} from "lucide-react";
 import { useAuth } from "../store/useAuth";
+import { userChat } from "../store/useChat";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const { logout, authUser } = useAuth();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const selectedUser = userChat((state) => state.selectedUser);
+  // WhatsApp-style: on phones an open chat gets the whole screen
+  const hideOnMobile = pathname === "/" && !!selectedUser;
 
   const toggleTheme = () => {
     const newTheme = isDark ? "light" : "dark";
@@ -30,7 +35,11 @@ const avatarUrl = `https://api.dicebear.com/9.x/adventurer/png?seed=${randomSeed
     authUser?.profilePic || avatarUrl;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-base-100 shadow-lg z-50">
+    <nav
+      className={`fixed top-0 left-0 right-0 bg-base-100 shadow-lg z-50 ${
+        hideOnMobile ? "hidden md:block" : ""
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <div

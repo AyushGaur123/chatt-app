@@ -1,4 +1,5 @@
-import { X, Trash2 } from "lucide-react";
+
+import { X, Trash2, ArrowLeft } from "lucide-react";
 import { useAuth } from "../store/useAuth";
 import { userChat } from "../store/useChat";
 
@@ -8,11 +9,26 @@ const ChatHeader = ({ onClearChat }) => {
 
   if (!selectedUser) return null;
 
+  // On phones a history entry is pushed when a chat opens (see Homepage.jsx),
+  // so going back through history keeps the browser back button in sync.
+  const closeChat = () => {
+    if (window.history.state?.chatOpen) window.history.back();
+    else setSelectedUser(null);
+  };
+
   return (
-    <div className="p-3 border-b border-base-300 bg-base-200 shadow-sm">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="avatar relative">
+    <div className="p-2 md:p-3 border-b border-base-300 bg-base-200 shadow-sm">
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2 md:gap-3 min-w-0">
+          <button
+            onClick={closeChat}
+            className="btn btn-ghost btn-circle size-10 min-h-0 md:hidden shrink-0"
+            aria-label="Back to chats"
+          >
+            <ArrowLeft size={22} />
+          </button>
+
+          <div className="avatar relative shrink-0">
             <div className="size-10 rounded-full border">
               <img
                 src={selectedUser.profilePic || "/avtar.png"}
@@ -29,8 +45,8 @@ const ChatHeader = ({ onClearChat }) => {
             ></span>
           </div>
 
-          <div>
-            <h3 className="font-semibold text-base-content">
+          <div className="min-w-0">
+            <h3 className="font-semibold text-base-content truncate">
               {selectedUser.fullName}
             </h3>
             <p className="text-xs text-base-content/70">
@@ -39,19 +55,21 @@ const ChatHeader = ({ onClearChat }) => {
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={onClearChat}
             className="btn btn-sm btn-outline btn-error tooltip tooltip-left"
             data-tip="Clear Chat"
+            aria-label="Clear chat"
           >
             <Trash2 size={16} />
           </button>
 
           <button
-            onClick={() => setSelectedUser(null)}
-            className="btn btn-sm btn-outline tooltip tooltip-left"
+            onClick={closeChat}
+            className="hidden md:inline-flex btn btn-sm btn-outline tooltip tooltip-left"
             data-tip="Close Chat"
+            aria-label="Close chat"
           >
             <X size={16} />
           </button>

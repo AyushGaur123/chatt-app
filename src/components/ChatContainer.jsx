@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Trash2 } from "lucide-react";
 import { toast } from "react-hot-toast";
 
@@ -27,6 +27,8 @@ const ChatContainer = () => {
 
   const { authUser } = useAuth();
   const messagesEndRef = useRef(null);
+  // Phones have no hover: tapping your own message reveals its delete button.
+  const [activeMessageId, setActiveMessageId] = useState(null);
 
   useEffect(() => {
     if (!selectedUser?._id) return;
@@ -110,7 +112,7 @@ const ChatContainer = () => {
 
   if (isMessagesLoading) {
     return (
-      <div className="flex-1 flex flex-col overflow-auto">
+      <div className="flex-1 min-w-0 min-h-0 flex flex-col overflow-hidden">
         <ChatHeader onClearChat={handleClearChat} />
         <MessageSkeleton />
         <MessageInput />
@@ -119,10 +121,10 @@ const ChatContainer = () => {
   }
 
   return (
-    <div className="flex-1 flex flex-col overflow-auto">
+    <div className="flex-1 min-w-0 min-h-0 flex flex-col overflow-hidden">
       <ChatHeader onClearChat={handleClearChat} />
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-3 md:p-4 space-y-4">
         {messages.map((message, index) => {
           const currentDate = new Date(
             message.createdAt
@@ -154,7 +156,7 @@ const ChatContainer = () => {
                     : "chat-start"
                   }`}
               >
-                <div className="chat-image avatar">
+                <div className="chat-image avatar hidden md:block">
                   <div className="size-10 rounded-full border">
                     <img
                       src={
@@ -173,12 +175,20 @@ const ChatContainer = () => {
                   </time>
                 </div>
 
-                <div className="chat-bubble flex flex-col relative group">
+                <div
+                  className="chat-bubble flex flex-col relative group break-words"
+                  onClick={() =>
+                    message.senderId === authUser._id &&
+                    setActiveMessageId((id) =>
+                      id === message._id ? null : message._id
+                    )
+                  }
+                >
                   {message.image && (
                     <img
                       src={message.image}
                       alt="attachment"
-                      className="sm:max-w-[200px] rounded-md mb-2"
+                      className="max-w-full sm:max-w-[200px] rounded-md mb-2"
                     />
                   )}
 
@@ -191,6 +201,7 @@ const ChatContainer = () => {
                       }
 
                       className="
+                              hidden md:block
                               absolute
                              -left-10
                              top-1/2
@@ -213,6 +224,20 @@ const ChatContainer = () => {
                       <Trash2 size={14} />
                     </button>
                   )}
+
+                  {message.senderId === authUser._id &&
+                    activeMessageId === message._id && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActiveMessageId(null);
+                          handleDeleteMessage(message._id);
+                        }}
+                        className="md:hidden mt-2 flex items-center gap-1 self-end text-xs underline opacity-80"
+                      >
+                        <Trash2 size={12} /> Delete
+                      </button>
+                    )}
                 </div>
 
 
